@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include "quicksort.h"
-using namespace chrono;
+using namespace std::chrono;
 using namespace std;
 
 

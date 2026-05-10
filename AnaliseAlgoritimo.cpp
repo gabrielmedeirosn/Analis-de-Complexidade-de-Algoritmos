@@ -1,6 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <algorithm>
+#include <cmath>
 #include "quicksort.h"
 using namespace chrono;
 using namespace std;
@@ -70,3 +71,38 @@ void bubbleSort (int lista[], int tam){
 
 /* QuickSort incluso em arquivo */
 
+double calcularCrescimento (double tempo1, double tempo2, double tempo3, int tamanho1, int tamanho2, int tamanho3){
+    double mediaTempo1 = tempo2/tempo1;
+    double mediaTempo2 = tempo3/tempo2;
+    double mediaTempoTotal = (mediaTempo1 + mediaTempo2) / 2;
+    
+    int mediaCrescTam1 = tamanho2/tamanho1;
+    int mediaCrescTam2 = tamanho3/tamanho1;
+    int mediaCrescTamTotal = (double)(mediaCrescTam1+mediaCrescTam2) / 2;
+
+    return log(mediaTempoTotal) / log(mediaCrescTamTotal); //relaciona o crescimento do tempo ao crescimento da entrada. Log usado para descobrir o expoente, como consequencia complexidade.
+}
+
+string ClassComplexidade(double expoente){
+    if(expoente < 0.5){
+        return "O(log n)";
+    }
+
+    else if(expoente < 1.2){
+        return "O(n)";
+    }
+
+    else if(expoente < 1.5){
+        return "O(n log n)";
+    }
+
+    else if(expoente < 2.5){
+        return "O(n^2)";
+    }
+
+    else if(expoente < 3.5){
+        return "O(n^3)";
+    }
+
+    return "Complexidade maior";
+}

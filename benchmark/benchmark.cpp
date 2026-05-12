@@ -45,16 +45,16 @@ string Benchmark::detectarComplexidade(
     curvas["O(log n)"] = {};
     curvas["O(n)"] = {};
     curvas["O(n log n)"] = {};
-    curvas["O(n²)"] = {};
-    curvas["O(n³)"] = {};
+    curvas["O(n^2)"] = {};
+    curvas["O(n^3)"] = {};
 
     for(double n : nValores){
 
         curvas["O(log n)"].push_back(log(n));
         curvas["O(n)"].push_back(n);
         curvas["O(n log n)"].push_back(n * log(n));
-        curvas["O(n²)"].push_back(n * n);
-        curvas["O(n³)"].push_back(n * n * n);
+        curvas["O(n^2)"].push_back(n * n);
+        curvas["O(n^3)"].push_back(n * n * n);
     }
 
     string melhorComplexidade;
@@ -182,7 +182,7 @@ void Benchmark::testarBusca(
     cout << "TESTANDO: " << nome << endl;
     cout << "====================================\n\n";
 
-    for(int n = 1000; n <= 10000; n += 1000){
+    for(int n = 10000; n <= 160000; n *= 2){
 
         vector<int> v(n);
 

@@ -1,5 +1,8 @@
 #include "ordenacao.h"
 
+// Ordena os elementos utilizando
+// o algoritmo Insertion Sort.
+
 void insertionSort(std::vector<int>& v){
 
     for(std::size_t i = 1; i < v.size(); i++){
@@ -16,6 +19,9 @@ void insertionSort(std::vector<int>& v){
         v[j + 1] = chave;
     }
 }
+
+// Ordena os elementos utilizando
+// o algoritmo Merge Sort.
 
 void merge(
     std::vector<int>& v,

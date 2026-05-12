@@ -13,6 +13,10 @@
 using namespace std;
 using namespace chrono;
 
+// Compara os dados experimentais
+// com curvas assintóticas teóricas
+// e retorna a complexidade com menor erro.
+
 string Benchmark::detectarComplexidade(
     const vector<pair<int,double>>& dados
 ){
@@ -90,6 +94,10 @@ string Benchmark::detectarComplexidade(
     return melhorComplexidade;
 }
 
+// Executa benchmark de algoritmos
+// de ordenação para diferentes
+// tamanhos de entrada.
+
 void Benchmark::testarOrdenacao(
     function<void(vector<int>&)> algoritmo,
     const string& nome
@@ -155,15 +163,26 @@ void Benchmark::testarOrdenacao(
          << endl;
 }
 
-void Benchmark::testarBuscaSequencial(){
+// Executa benchmark de algoritmos
+// de busca para diferentes
+// tamanhos de entrada.
+
+void Benchmark::testarBusca(
+    function<int(
+        const vector<int>&,
+        int
+    )> algoritmo,
+
+    const string& nome
+){
 
     vector<pair<int,double>> resultados;
 
     cout << "\n====================================\n";
-    cout << "TESTANDO: Busca Sequencial\n";
+    cout << "TESTANDO: " << nome << endl;
     cout << "====================================\n\n";
 
-    for(int n = 10000; n <= 100000; n += 10000){
+    for(int n = 1000; n <= 10000; n += 1000){
 
         vector<int> v(n);
 
@@ -172,28 +191,29 @@ void Benchmark::testarBuscaSequencial(){
         }
 
         int alvo = n - 1;
+        auto inicio =
+            high_resolution_clock::now();
 
-        double soma = 0;
+        for(int repeticao = 0;
+            repeticao < 100000;
+            repeticao++){
 
-        for(int i = 0; i < 1000; i++){
+            volatile int resultado =
+                algoritmo(v, alvo);
 
-            auto inicio =
-                high_resolution_clock::now();
-
-            buscaSequencial(v, alvo);
-
-            auto fim =
-                high_resolution_clock::now();
-
-            double tempo =
-                duration<double, micro>(
-                    fim - inicio
-                ).count();
-
-            soma += tempo;
+            (void)resultado;
         }
 
-        double media = soma / 1000.0;
+        auto fim =
+            high_resolution_clock::now();
+
+        double tempoTotal =
+            duration<double, nano>(
+                fim - inicio
+            ).count();
+
+        double media =
+            tempoTotal / 100000.0;
 
         resultados.push_back({n, media});
 
@@ -201,72 +221,12 @@ void Benchmark::testarBuscaSequencial(){
              << n
              << " | tempo medio = "
              << media
-             << " us"
+             << " ns"
              << endl;
     }
 
     salvarCSV(
-        "resultados/buscaSequencial.csv",
-        resultados
-    );
-
-    cout << "\nComplexidade detectada: "
-         << detectarComplexidade(resultados)
-         << endl;
-}
-
-void Benchmark::testarBuscaBinaria(){
-
-    vector<pair<int,double>> resultados;
-
-    cout << "\n====================================\n";
-    cout << "TESTANDO: Busca Binaria\n";
-    cout << "====================================\n\n";
-
-    for(int n = 10000; n <= 100000; n += 10000){
-
-        vector<int> v(n);
-
-        for(int i = 0; i < n; i++){
-            v[i] = i;
-        }
-
-        int alvo = n - 1;
-
-        double soma = 0;
-
-        for(int i = 0; i < 1000; i++){
-
-            auto inicio =
-                high_resolution_clock::now();
-
-            buscaBinaria(v, alvo);
-
-            auto fim =
-                high_resolution_clock::now();
-
-            double tempo =
-                duration<double, micro>(
-                    fim - inicio
-                ).count();
-
-            soma += tempo;
-        }
-
-        double media = soma / 1000.0;
-
-        resultados.push_back({n, media});
-
-        cout << "n = "
-             << n
-             << " | tempo medio = "
-             << media
-             << " us"
-             << endl;
-    }
-
-    salvarCSV(
-        "resultados/buscaBinaria.csv",
+        "resultados/" + nome + ".csv",
         resultados
     );
 

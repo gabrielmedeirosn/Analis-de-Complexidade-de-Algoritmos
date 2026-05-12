@@ -1,5 +1,8 @@
 #include "buscas.h"
 
+// Procura um elemento percorrendo
+// o vetor sequencialmente.
+
 int buscaSequencial(
     const std::vector<int>& v,
     int alvo
@@ -14,6 +17,9 @@ int buscaSequencial(
 
     return -1;
 }
+
+// Procura um elemento utilizando
+// divisão sucessiva do vetor.
 
 int buscaBinaria(
     const std::vector<int>& v,

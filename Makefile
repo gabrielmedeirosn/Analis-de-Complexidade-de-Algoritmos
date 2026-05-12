@@ -2,7 +2,7 @@ CXX = g++
 
 CXXFLAGS = -Wall -Wextra -std=c++11
 
-TARGET = programa
+TARGET = programa.exe
 
 SRC = main.cpp \
       algoritmos/buscas.cpp \
@@ -13,14 +13,12 @@ SRC = main.cpp \
 all: $(TARGET)
 
 $(TARGET):
-	mkdir -p resultados
+	if not exist resultados mkdir resultados
 	$(CXX) $(CXXFLAGS) $(SRC) -o $(TARGET)
 
 run: all
-	./$(TARGET)
+	$(TARGET)
 
 clean:
-	rm -f $(TARGET)
-	rm -f resultados/*.csv
-
-rebuild: clean all
+	del /Q $(TARGET)
+	del /Q resultados\\*.csv

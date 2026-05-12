@@ -20,9 +20,14 @@ public:
         const std::string& nome
     );
 
-    static void testarBuscaSequencial();
+    static void testarBusca(
+        std::function<int(
+            const std::vector<int>&,
+            int
+        )> algoritmo,
 
-    static void testarBuscaBinaria();
+        const std::string& nome
+);
 };
 
 #endif

@@ -3,6 +3,7 @@
 
 #include "algoritmos/ordenacao.h"
 #include "benchmark/benchmark.h"
+#include "algoritmos/buscas.h"
 
 using namespace std;
 
@@ -29,9 +30,15 @@ int main(){
         "mergeSort"
     );
 
-    Benchmark::testarBuscaSequencial();
+     Benchmark::testarBusca(
+     buscaSequencial,
+     "buscaSequencial"
+     );
 
-    Benchmark::testarBuscaBinaria();
+     Benchmark::testarBusca(
+     buscaBinaria,
+     "buscaBinaria"
+     );
 
     cout << "\n===================================="
          << endl;
